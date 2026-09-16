@@ -652,7 +652,7 @@ llm:
 delivery:
   # 飞书：分类卡片（总览卡 + 每类一张 + 未来趋向与创新点汇编卡）
   feishu:
-    enabled: false
+    enabled: true
     webhook_env: FEISHU_WEBHOOK
     secret_env: FEISHU_SECRET
     max_per_category: 15       # 每张分类卡片最多展示篇数，其余见仓库完整日报
