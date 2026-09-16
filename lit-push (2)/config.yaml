@@ -1,0 +1,680 @@
+# ============================================================
+# 专属文献推送系统 · 配置文件
+# 方向：语言智能 · 翻译与传播（翻译史 / 翻译与传播 / 翻译教育 / 人工智能与翻译）
+# 改完保存即可，无需改动代码。
+# ============================================================
+
+# ---------- 全局 ----------
+empty_notify: true               # 当天没有新文献时也发一条“今日无更新”
+runtime:
+  timezone: "Asia/Shanghai"
+
+# ---------- 四大研究板块（自动归类，顺序即报告/卡片顺序）----------
+# LLM 开启时由模型归类并给出具体研究方向；未开启时用下面的关键词规则打分兜底。
+# 归不进前四类的文章放入“其他相关”。
+classification:
+  fallback_other: "五、翻译学综合与其他"
+  categories:
+    # keywords = 强特征词（直接决定归类）；weak_keywords = 弱信号语境词，
+    # 仅当四类强词全部未命中时启用，用于把翻译专刊文章尽量收进四大板块。
+    - name: "一、翻译史"
+      keywords:
+        - "translation history"
+        - "history of translation"
+        - "historical translation"
+        - "translation historiography"
+        - "historiography of translation"
+        - "oral history"
+        - "regional translation"
+        - "translation geography"
+        - "geography of translation"
+        - "missionary translation"
+        - "history of interpreting"
+        - "translators in history"
+        - "translator biography"
+        - "literary circulation"
+        - "translation and memory"
+        - "translational and memory"
+        - "retranslation"
+        - "paratext"
+        - "翻译史"
+        - "口述史"
+        - "区域翻译史"
+        - "翻译地理学"
+        - "民族翻译史"
+        - "翻译家"
+        - "翻译史学"
+        - "译史"
+        - "译介史"
+        - "翻译思想史"
+        - "典籍翻译"
+        - "佛经翻译"
+        - "译经"
+        - "传教士"
+        - "史料"
+        - "历史考察"
+        - "历史演进"
+        - "晚清"
+        - "清末"
+        - "民国"
+        - "明清"
+        - "元代"
+        - "清代"
+        - "唐代"
+        - "近代翻译"
+        - "文献计量"
+        - "知识图谱"
+        - "翻译通史"
+        - "翻译出版史"
+      weak_keywords:
+        - "history"
+        - "historical"
+        - "historiography"
+        - "archive"
+        - "archival"
+        - "museum"
+        - "century"
+        - "dynasty"
+        - "colonial"
+        - "postcolonial"
+        - "retrospective"
+        - "circulation"
+        - "origins"
+        - "译介"
+        - "外译史"
+        - "会通"
+        - "民族交融"
+        - "文化认同"
+        - "古典"
+        - "溯源"
+        - "脉络"
+        - "民族志"
+        - "记忆"
+        - "历史"
+        - "演变"
+        - "演进"
+    - name: "二、翻译与传播"
+      keywords:
+        - "international communication"
+        - "external communication"
+        - "translation and communication"
+        - "news translation"
+        - "media translation"
+        - "journalistic translation"
+        - "intercultural communication"
+        - "cross-cultural communication"
+        - "transnational communication"
+        - "global communication"
+        - "international broadcasting"
+        - "national image"
+        - "public diplomacy"
+        - "audiovisual translation"
+        - "subtitling"
+        - "subtitles"
+        - "subtitle"
+        - "captioning"
+        - "dubbing"
+        - "film translation"
+        - "literary translation"
+        - "children's literature"
+        - "crisis translation"
+        - "community interpreting"
+        - "public service interpreting"
+        - "healthcare interpreting"
+        - "medical interpreting"
+        - "legal interpreting"
+        - "video remote interpreting"
+        - "translation policy"
+        - "minority translation"
+        - "ethnic translation"
+        - "applied translation"
+        - "translation criticism"
+        - "translation in disciplines"
+        - "translation reception"
+        - "knowledge dissemination"
+        - "对外传播"
+        - "翻译与传播"
+        - "国际传播"
+        - "跨文化传播"
+        - "民族翻译"
+        - "应用翻译"
+        - "翻译批评"
+        - "新闻翻译"
+        - "字幕翻译"
+        - "影视翻译"
+        - "文学翻译"
+        - "医疗口译"
+        - "法律口译"
+        - "国家形象"
+        - "公共外交"
+        - "全球传播"
+        - "对外话语"
+        - "外宣"
+        - "讲好中国故事"
+        - "文化走出去"
+        - "文学外译"
+        - "中译外"
+        - "外译"
+        - "海外传播"
+        - "海外接受"
+        - "跨文化接受"
+        - "传播效果"
+        - "国际舆论"
+        - "翻译出版"
+        - "跨文化交际"
+        - "文明互鉴"
+        - "出海"
+        - "本地化"
+        - "危机翻译"
+        - "社区口译"
+        - "读者评论"
+        - "国际发表"
+        - "中国翻译研究"
+        - "译介与传播"
+        - "外译作品"
+      weak_keywords:
+        - "media"
+        - "news"
+        - "journalis"
+        - "audience"
+        - "reception"
+        - "dissemination"
+        - "social media"
+        - "platform"
+        - "broadcast"
+        - "audiovisual"
+        - "film"
+        - "comedy"
+        - "publishing"
+        - "literary"
+        - "literature"
+        - "discourse"
+        - "intercultural"
+        - "transnational"
+        - "cross-cultural"
+        - "healthcare"
+        - "maternity"
+        - "传播"
+        - "接受"
+        - "跨文化"
+        - "媒体"
+        - "媒介"
+        - "叙事"
+        - "话语"
+        - "舆论"
+        - "读者"
+        - "海外"
+        - "出版"
+        - "转译"
+        - "英译"
+        - "中译"
+    - name: "三、翻译教育/翻译教学"
+      keywords:
+        - "translation pedagogy"
+        - "translator education"
+        - "interpreter education"
+        - "translation teaching"
+        - "translation instruction"
+        - "translator training"
+        - "interpreter training"
+        - "interpreting pedagogy"
+        - "translation curriculum"
+        - "translation classroom"
+        - "translation competence"
+        - "translation competition"
+        - "translation assessment"
+        - "learner corpus translation"
+        - "student translators"
+        - "trainee interpreters"
+        - "trainee translators"
+        - "translation students"
+        - "didactics of translation"
+        - "翻译教育"
+        - "翻译教学"
+        - "翻译比赛"
+        - "译员培养"
+        - "口译教学"
+        - "翻译硕士"
+        - "翻译课程"
+        - "翻译教材"
+        - "翻译人才"
+        - "翻译工作坊"
+        - "翻译技术教学"
+        - "译者能力"
+        - "翻译能力"
+        - "翻译竞赛"
+        - "教学模式"
+        - "课程思政"
+        - "同文馆"
+        - "外语教育"
+        - "人才培养"
+        - "培养模式"
+        - "翻译专业"
+        - "翻译培训"
+        - "笔译教学"
+        - "翻译课堂"
+        - "翻译教师"
+        - "教材建设"
+        - "翻译学科"
+        - "学科建构"
+      weak_keywords:
+        - "education"
+        - "educational"
+        - "pedagog"
+        - "teaching"
+        - "training"
+        - "curriculum"
+        - "classroom"
+        - "student"
+        - "learner"
+        - "trainee"
+        - "didactic"
+        - "teacher"
+        - "competence"
+        - "教学"
+        - "课程"
+        - "教材"
+        - "教师"
+        - "课堂"
+        - "培养"
+        - "教育"
+        - "培训"
+        - "学科"
+        - "工作坊"
+        - "评估"
+    - name: "四、人工智能与翻译"
+      keywords:
+        - "machine translation"
+        - "neural machine translation"
+        - "statistical machine translation"
+        - "ai translation"
+        - "ai-assisted"
+        - "artificial intelligence translation"
+        - "large language model"
+        - "llm"
+        - "generative ai"
+        - "chatgpt"
+        - "computer-assisted translation"
+        - "computer-aided translation"
+        - "translation technology"
+        - "translation memory"
+        - "post-editing"
+        - "post editing"
+        - "machine interpreting"
+        - "automatic interpreting"
+        - "automatic subtitling"
+        - "automated translation"
+        - "speech translation"
+        - "speech-to-text"
+        - "speech recognition"
+        - "asr"
+        - "simultaneous interpreting technology"
+        - "interpreting technology"
+        - "corpus-based translation"
+        - "机器翻译"
+        - "人工智能"
+        - "大模型"
+        - "大语言模型"
+        - "计算机辅助翻译"
+        - "翻译技术"
+        - "译后编辑"
+        - "语料库翻译"
+        - "口译技术"
+        - "语音识别"
+        - "机器口译"
+        - "生成式人工智能"
+        - "智能翻译"
+        - "自动翻译"
+        - "翻译记忆"
+        - "术语管理"
+        - "人机协同"
+        - "人机协作"
+        - "AI翻译"
+        - "大模型翻译"
+        - "自动字幕"
+        - "神经机器翻译"
+        - "平行语料"
+        - "词元"
+        - "智能口译"
+      weak_keywords:
+        - "automatic"
+        - "automated"
+        - "digital"
+        - "computational"
+        - "software"
+        - "algorithm"
+        - "neural"
+        - "deep learning"
+        - "nlp"
+        - "eye-tracking"
+        - "technology"
+        - "technological"
+        - "数智"
+        - "技术赋能"
+        - "智能体"
+        - "算法"
+        - "数字化转型"
+
+# ---------- 数据源 ----------
+sources:
+
+  # arXiv：机器翻译、大模型、语言智能的技术前沿
+  arxiv:
+    enabled: true
+    categories: ["cs.CL", "cs.CY"]
+    lookback_days: 2
+    max_results: 100
+    keywords_any:
+      - "machine translation"
+      - "neural machine translation"
+      - "translation quality estimation"
+      - "computer-assisted translation"
+      - "translation memory"
+      - "post-editing"
+      - "simultaneous interpreting"
+      - "speech translation"
+      - "machine interpreting"
+      - "large language model translation"
+      - "subtitling"
+      - "localization"
+    keywords_exclude:
+      - "translational medicine"
+      - "translational research"
+      - "biotransformation"
+
+  # PubMed：医学口译/医疗翻译等应用场景（人文社科向）
+  pubmed:
+    enabled: false
+    term: "medical interpreting OR healthcare interpreter OR medical translation"
+    lookback_days: 7
+    max_results: 40
+    api_key_env: PUBMED_API_KEY
+    keywords_any:
+      - "medical interpreting"
+      - "healthcare interpreter"
+      - "medical translation"
+      - "cross-cultural communication clinical"
+    keywords_exclude: []
+
+  # OpenAlex：跨刊关键词扫描（人文社科期刊覆盖好）+ 锁定特定期刊目录
+  openalex:
+    enabled: true
+    lookback_days: 5             # 跨刊扫描回溯天数
+    journal_lookback_days: 21    # 锁刊目录回溯天数（月刊/季刊不漏期）
+    per_page: 100
+    journal_only: true
+    mailto: "your_email@example.com"   # 建议改成自己的邮箱，进入 OpenAlex 礼貌池
+    # 跨刊扫描词（服务端自动 OR 合并为一次请求）
+    terms:
+      # 翻译史
+      - "history of translation"
+      - "translation historiography"
+      - "oral history translation"
+      - "translation geography"
+      - "missionary translation"
+      # 翻译与传播
+      - "international communication translation"
+      - "news translation"
+      - "media translation"
+      - "journalistic translation"
+      - "intercultural communication translation"
+      - "transnational communication"
+      - "national image translation"
+      - "audiovisual translation"
+      - "minority translation"
+      - "ethnic translation"
+      - "translation criticism"
+      # 翻译教育
+      - "translation pedagogy"
+      - "translator education"
+      - "translation teaching"
+      - "interpreter training"
+      - "translation competence"
+      - "translation competition"
+      # 人工智能与翻译
+      - "machine translation"
+      - "computer-assisted translation"
+      - "translation technology"
+      - "post-editing machine translation"
+      - "large language model translation"
+      - "machine interpreting"
+      - "speech translation"
+      - "translation memory"
+      - "corpus translation studies"
+    terms_zh:
+      - "翻译史"
+      - "对外传播"
+      - "翻译与传播"
+      - "翻译教育"
+      - "翻译教学"
+      - "口述史"
+      - "翻译地理学"
+      - "民族翻译"
+      - "应用翻译"
+      - "翻译批评"
+      - "机器翻译"
+      - "翻译技术"
+    keywords_exclude:
+      - "translational medicine"
+      - "translational research"
+      - "biotransformation"
+      - "communications medicine"
+      - "communications biology"
+    # 按 OpenAlex source id 锁定的期刊（持续更新、无 Crossref DOI 时用）
+    journal_sources:
+      - name: "Chinese Journal of Applied Linguistics"
+        source_id: "S4210195546"
+        keywords_any:
+          - "translation"
+          - "translator"
+          - "interpreting"
+          - "interpreter"
+          - "machine translation"
+          - "post-editing"
+          - "bilingual"
+          - "cross-lingual"
+          - "language technology"
+          - "generative ai"
+          - "corpus"
+
+  # Crossref：按 ISSN 锁定期刊目录，不漏一期（ISSN 均已逐一验证）
+  crossref:
+    enabled: true
+    lookback_days: 21
+    rows: 30
+    mailto: "your_email@example.com"   # 建议改成自己的邮箱，进入 Crossref 礼貌池（限流更宽松）
+    polite_interval: 0.8               # 每刊请求间隔秒数，避免 429
+    # 共享过滤词表（YAML 锚点）：非翻译专刊只收翻译/跨文化/国际传播相关文章
+    _kw:
+      trans: &kw_trans
+        - "translation"
+        - "translator"
+        - "interpreting"
+        - "interpreter"
+        - "machine translation"
+        - "post-editing"
+        - "computer-assisted"
+        - "translation technology"
+        - "subtitling"
+        - "dubbing"
+        - "localization"
+        - "translanguaging"
+        - "multilingual"
+        - "bilingual"
+        - "cross-lingual"
+      comm: &kw_comm
+        - "translation"
+        - "translator"
+        - "interpreting"
+        - "interpreter"
+        - "subtitling"
+        - "dubbing"
+        - "audiovisual"
+        - "localization"
+        - "multilingual"
+        - "multilingualism"
+        - "bilingual"
+        - "cross-lingual"
+        - "intercultural"
+        - "cross-cultural"
+        - "transcultural"
+        - "transnational"
+        - "international communication"
+        - "global communication"
+        - "public diplomacy"
+        - "national image"
+        - "news translation"
+        - "media translation"
+        - "language policy"
+        - "language ideology"
+    journals:
+      # —— 翻译学 / 口译学专刊：目录全收 ——
+      - {name: "Target", issn: "1569-9986"}
+      - {name: "Meta", issn: "1492-1421"}
+      - {name: "Perspectives", issn: "1747-6623"}
+      - {name: "Translation Studies", issn: "1478-1700"}
+      - {name: "The Translator", issn: "1757-0409"}
+      - {name: "Across Languages and Cultures", issn: "1588-2519"}
+      - {name: "Interpreting", issn: "1569-982X"}
+      - {name: "The Interpreter and Translator Trainer", issn: "1757-0417"}
+      - {name: "Translation and Interpreting Studies", issn: "1932-2798"}
+      - {name: "Babel", issn: "1569-9668"}
+      - {name: "Translation, Cognition & Behavior", issn: "2542-5277"}
+      - {name: "Asia Pacific Translation and Intercultural Studies", issn: "2330-6351"}
+      - {name: "Mutatis Mutandis", issn: "2011-799X"}
+      - {name: "Linguistica Antverpiensia New Series", issn: "2295-5739"}
+      - {name: "Translation and Translanguaging in Multilingual Contexts", issn: "2352-1813"}
+      - {name: "Journal of Translation Studies (CUHK)", issn: "1027-7978"}
+      - {name: "Machine Translation", issn: "1573-0573"}
+      - {name: "The International Journal of Translation and Interpreting Research", issn: "1836-9324"}
+      # —— 语言技术 / 外语教育刊：只收翻译相关 ——
+      - {name: "System", issn: "0346-251X", keywords_any: *kw_trans}
+      - {name: "Computer Assisted Language Learning", issn: "1744-3210", keywords_any: *kw_trans}
+      - {name: "ReCALL", issn: "1474-0109", keywords_any: *kw_trans}
+      - {name: "Language Learning & Technology", issn: "1094-3501", keywords_any: *kw_trans}
+      - {name: "Journal of World Languages", issn: "2169-8260", keywords_any: *kw_trans}
+      - {name: "Foreign Language Annals", issn: "1944-9720", keywords_any: *kw_trans}
+      - {name: "Asian-Pacific Journal of Second and Foreign Language Education", issn: "2363-5169", keywords_any: *kw_trans}
+      # —— 跨文化 / 多语话语刊：只收翻译与跨文化传播相关 ——
+      - {name: "Language and Intercultural Communication", issn: "1747-759X", keywords_any: *kw_comm}
+      - {name: "Journal of Multicultural Discourses", issn: "1744-7143", keywords_any: *kw_comm}
+      # —— 传播学 SSCI：只收翻译/跨文化/国际传播交叉内容 ——
+      - {name: "New Media & Society", issn: "1461-4448", keywords_any: *kw_comm}
+      - {name: "Journal of Communication", issn: "1460-2466", keywords_any: *kw_comm}
+      - {name: "Journal of Computer-Mediated Communication", issn: "1083-6101", keywords_any: *kw_comm}
+      - {name: "Digital Journalism", issn: "2167-082X", keywords_any: *kw_comm}
+      - {name: "Information, Communication & Society", issn: "1468-4462", keywords_any: *kw_comm}
+      - {name: "Chinese Journal of Communication", issn: "1754-4750", keywords_any: *kw_comm}
+      - {name: "Political Communication", issn: "1058-4609", keywords_any: *kw_comm}
+      - {name: "Communication Research", issn: "1552-3810", keywords_any: *kw_comm}
+      - {name: "Human Communication Research", issn: "1468-2958", keywords_any: *kw_comm}
+      - {name: "Communication Theory", issn: "1468-2885", keywords_any: *kw_comm}
+      - {name: "Media, Culture & Society", issn: "1460-3675", keywords_any: *kw_comm}
+      - {name: "Global Media and Communication", issn: "1742-7665", keywords_any: *kw_comm}
+      - {name: "International Communication Gazette", issn: "1748-0485", keywords_any: *kw_comm}
+      - {name: "Journal of International Communication", issn: "1321-6597", keywords_any: *kw_comm}
+      - {name: "Global Media and China", issn: "2059-4372", keywords_any: *kw_comm}
+      - {name: "The International Journal of Press/Politics", issn: "1940-1612", keywords_any: *kw_comm}
+      - {name: "Journalism", issn: "1741-3001", keywords_any: *kw_comm}
+      - {name: "Journalism Studies", issn: "1469-9699", keywords_any: *kw_comm}
+      - {name: "Science Communication", issn: "1552-8545", keywords_any: *kw_comm}
+      - {name: "Public Understanding of Science", issn: "1361-6609", keywords_any: *kw_comm}
+      - {name: "Asian Journal of Communication", issn: "1742-0911", keywords_any: *kw_comm}
+      - {name: "Mass Communication and Society", issn: "1532-7825", keywords_any: *kw_comm}
+      - {name: "Communication, Culture and Critique", issn: "1753-9137", keywords_any: *kw_comm}
+      - {name: "Journal of Communication Inquiry", issn: "1552-4612", keywords_any: *kw_comm}
+      - {name: "European Journal of Communication", issn: "1460-3705", keywords_any: *kw_comm}
+      - {name: "Discourse, Context & Media", issn: "2211-6958", keywords_any: *kw_comm}
+
+  # RSS：知网官方期刊 RSS（免费、合法、无需购买/爬虫；仅含篇名、作者、日期、部分摘要）
+  # 获取方法：navi.cnki.net 搜刊 → 期刊主页“RSS 订阅” → 把 navi.cnki.net 改成 rss.cnki.net
+  # 代码即下方 url 末尾 4 位字母；月刊/双月刊窗口设 40 天，避免漏期。
+  rss:
+    enabled: true
+    # 翻译专刊：目录全收
+    # 外语/传播综合刊：按关键词过滤，只收翻译与国际传播相关文章
+    _kw:
+      fl: &kw_fl          # 外语类综合刊过滤词
+        keywords_any: ["译", "翻译", "口译", "笔译", "跨文化", "传播", "机器翻译", "大模型"]
+      cb: &kw_cb          # 传播类综合刊过滤词
+        keywords_any: ["译", "翻译", "译介", "对外传播", "国际传播", "跨文化",
+                       "国家形象", "公共外交", "全球传播", "对外话语", "外宣", "出海"]
+    feeds:
+      # —— 翻译学核心刊（全收）——
+      - {name: "中国翻译", url: "https://rss.cnki.net/knavi/rss/ZGFY", lookback_days: 60}
+      - {name: "上海翻译", url: "https://rss.cnki.net/knavi/rss/SHKF", lookback_days: 60}
+      - {name: "中国科技翻译", url: "https://rss.cnki.net/knavi/rss/KJFY", lookback_days: 90}
+      - {name: "民族翻译", url: "https://rss.cnki.net/knavi/rss/MZFY", lookback_days: 90,
+         keywords_any: ["译", "翻译", "口译", "跨文化", "传播", "外译", "译介", "译写", "译本"]}
+      - {name: "语言与翻译", url: "https://rss.cnki.net/knavi/rss/YYFY", lookback_days: 60,
+         keywords_any: ["译", "翻译", "口译", "跨文化", "传播"]}
+      # —— 外语/翻译教育类 CSSCI/北大核心（过滤）——
+      - {name: "外语界", url: "https://rss.cnki.net/knavi/rss/WYJY", lookback_days: 60, <<: *kw_fl}
+      - {name: "外语教学与研究", url: "https://rss.cnki.net/knavi/rss/WJYY", lookback_days: 60, <<: *kw_fl}
+      - {name: "中国外语", url: "https://rss.cnki.net/knavi/rss/ZGWE", lookback_days: 60, <<: *kw_fl}
+      - {name: "外语电化教学", url: "https://rss.cnki.net/knavi/rss/WYDH", lookback_days: 60, <<: *kw_fl}
+      - {name: "现代外语", url: "https://rss.cnki.net/knavi/rss/XDWY", lookback_days: 60, <<: *kw_fl}
+      - {name: "山东外语教学", url: "https://rss.cnki.net/knavi/rss/SDWY", lookback_days: 60, <<: *kw_fl}
+      - {name: "天津外国语大学学报", url: "https://rss.cnki.net/knavi/rss/TJWG", lookback_days: 60, <<: *kw_fl}
+      - {name: "外国语文研究", url: "https://rss.cnki.net/knavi/rss/WGYJ", lookback_days: 60, <<: *kw_fl}
+      - {name: "外国语", url: "https://rss.cnki.net/knavi/rss/WYXY", lookback_days: 60, <<: *kw_fl}
+      - {name: "外语与外语教学", url: "https://rss.cnki.net/knavi/rss/WYWJ", lookback_days: 60, <<: *kw_fl}
+      # —— 新闻传播学 CSSCI/北大核心（过滤）——
+      - {name: "国际传播", url: "https://rss.cnki.net/knavi/rss/GJCB", lookback_days: 60, <<: *kw_cb}
+      - {name: "国际新闻界", url: "https://rss.cnki.net/knavi/rss/GJXW", lookback_days: 60, <<: *kw_cb}
+      - {name: "新闻记者", url: "https://rss.cnki.net/knavi/rss/XWJZ", lookback_days: 60, <<: *kw_cb}
+      - {name: "新闻大学", url: "https://rss.cnki.net/knavi/rss/XWDX", lookback_days: 90, <<: *kw_cb}
+      - {name: "中国记者", url: "https://rss.cnki.net/knavi/rss/ZGJZ", lookback_days: 60, <<: *kw_cb}
+      - {name: "现代传播", url: "https://rss.cnki.net/knavi/rss/XDCB", lookback_days: 60, <<: *kw_cb}
+      - {name: "新闻与写作", url: "https://rss.cnki.net/knavi/rss/XWXZ", lookback_days: 60, <<: *kw_cb}
+      - {name: "青年记者", url: "https://rss.cnki.net/knavi/rss/QNJZ", lookback_days: 60, <<: *kw_cb}
+      - {name: "新闻爱好者", url: "https://rss.cnki.net/knavi/rss/XWAH", lookback_days: 60, <<: *kw_cb}
+      - {name: "传媒观察", url: "https://rss.cnki.net/knavi/rss/CMGC", lookback_days: 60, <<: *kw_cb}
+    # 想加其他 OA 英文刊（如 JoSTrans 无 DOI）：
+    # - {name: "JoSTrans", url: "https://www.jostrans.org/feed.xml", lookback_days: 30}
+
+# ---------- LLM 深度提炼 ----------
+# 开启后：自动归类四大板块、识别具体研究方向、生成中文摘要/核心观点脉络/
+# 参考价值/未来研究趋向/可延伸创新点；“未来趋向与创新点”单独汇编成篇。
+llm:
+  enabled: false
+  provider: "openai_compatible"
+  base_url: "https://ark.cn-beijing.volces.com/api/v3"   # 豆包方舟；DeepSeek 用 https://api.deepseek.com
+  model: "doubao-seed-1-6-250615"                        # DeepSeek 改 deepseek-chat
+  api_key_env: LLM_API_KEY
+  batch_size: 8
+  only_recommended: false      # true = 只推送模型推荐的论文（降噪更狠）
+  min_score: 6
+  max_abstract_chars: 1800
+  # 无 Key 时自动降级：规则分类 + 原文摘要，不影响推送
+
+# ---------- 推送渠道 ----------
+delivery:
+  # 飞书：分类卡片（总览卡 + 每类一张 + 未来趋向与创新点汇编卡）
+  feishu:
+    enabled: false
+    webhook_env: FEISHU_WEBHOOK
+    secret_env: FEISHU_SECRET
+    max_per_category: 15       # 每张分类卡片最多展示篇数，其余见仓库完整日报
+  email:
+    enabled: false
+    smtp_host: "smtp.qq.com"
+    smtp_port: 465
+    use_ssl: true
+    username_env: SMTP_USERNAME
+    password_env: SMTP_PASSWORD
+    sender: ""
+    recipients: ["you@example.com"]
+  telegram:
+    enabled: false
+    bot_token_env: TELEGRAM_BOT_TOKEN
+    chat_id_env: TELEGRAM_CHAT_ID
+  pushplus:
+    enabled: false
+    token_env: PUSHPLUS_TOKEN
+    topic: ""
+
+# ---------- 存储 ----------
+storage:
+  seen_file: "data/seen.json"
+  report_dir: "data/reports"
