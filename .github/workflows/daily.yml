@@ -28,6 +28,9 @@ jobs:
 
       - name: 运行文献推送
         env:
+          # 知网 RSS 国内中继（GitHub Actions 海外 IP 被知网 CDN 拦截时必填，
+          # 部署方法见 README“知网中继”一节；本地国内运行无需配置）
+          CNKI_RSS_BASE: ${{ secrets.CNKI_RSS_BASE }}
           # 大模型（可选；变量名与 config.yaml 中 api_key_env 保持一致）
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           # 邮件（可选）

@@ -16,6 +16,7 @@
 """
 from __future__ import annotations
 
+import os
 import re
 import time
 import urllib.parse
@@ -29,6 +30,18 @@ import requests
 UTC = timezone.utc
 HTTP_TIMEOUT = 25
 USER_AGENT = "lit-push/1.0 (personal literature alert; contact: local)"
+
+# 知网 RSS 官方域名在境外（GitHub Actions 海外 runner）会被 CDN 按地域拦截（418/证书异常）。
+# 部署在国内的云函数中继可解决：把 CNKI_RSS_BASE 设为中继地址（如 https://xxx.tencentscf.com），
+# 知网 feed 的请求会自动改走中继；不设置时直连官方域名（国内本地运行无需配置）。
+CNKI_RSS_BASE = (os.environ.get("CNKI_RSS_BASE", "") or "").rstrip("/")
+
+
+def _maybe_relay(url: str) -> str:
+    """知网 RSS 链接按需替换为国内中继地址，其他源原样返回。"""
+    if CNKI_RSS_BASE and "rss.cnki.net" in url:
+        return re.sub(r"https?://rss\.cnki\.net", CNKI_RSS_BASE, url)
+    return url
 
 
 def _get(url: str, params: Optional[Dict[str, Any]] = None, tries: int = 3, timeout: int = HTTP_TIMEOUT):
@@ -269,7 +282,7 @@ def fetch_rss(cfg: Dict[str, Any], log) -> List[Dict[str, Any]]:
             continue
         name = feed_cfg.get("name", feed_cfg["url"])
         try:
-            resp = _get(feed_cfg["url"])
+            resp = _get(_maybe_relay(feed_cfg["url"]))
             feed = feedparser.parse(resp.content)
             rule = _rule_from(feed_cfg)
             days = int(feed_cfg.get("lookback_days", 7) or 7)
