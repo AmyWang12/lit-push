@@ -1,0 +1,40 @@
+name: diag-llm
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+      CNKI_RSS_BASE: ${{ secrets.CNKI_RSS_BASE }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test Ark LLM from overseas runner
+        run: |
+          python - <<'PY'
+          import os, json, urllib.request
+          key = os.environ["LLM_API_KEY"]
+          req = urllib.request.Request(
+              "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+              data=json.dumps({
+                  "model": "doubao-seed-2-1-pro-260915",
+                  "messages": [{"role": "user", "content": "用一句话说明什么是翻译传播学，不超过30字"}],
+                  "max_tokens": 200
+              }).encode(),
+              headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"})
+          try:
+              with urllib.request.urlopen(req, timeout=60) as r:
+                  d = json.loads(r.read())
+              print("LLM_OK:", d["choices"][0]["message"]["content"])
+          except urllib.error.HTTPError as e:
+              print("LLM_HTTP_ERROR:", e.code, e.read().decode()[:400])
+          except Exception as e:
+              print("LLM_ERR:", type(e).__name__, e)
+          # 同时确认中继仍可达
+          try:
+              with urllib.request.urlopen(os.environ["CNKI_RSS_BASE"] + "/knavi/rss/ZGFY", timeout=30) as r:
+                  b = r.read()
+              print("RELAY_OK:", r.status, len(b), b[:40])
+          except Exception as e:
+              print("RELAY_ERR:", type(e).__name__, e)
+          PY
