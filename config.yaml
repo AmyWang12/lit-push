@@ -637,10 +637,10 @@ sources:
 # 开启后：自动归类四大板块、识别具体研究方向、生成中文摘要/核心观点脉络/
 # 参考价值/未来研究趋向/可延伸创新点；“未来趋向与创新点”单独汇编成篇。
 llm:
-  enabled: false
+  enabled: true
   provider: "openai_compatible"
   base_url: "https://ark.cn-beijing.volces.com/api/v3"   # 豆包方舟；DeepSeek 用 https://api.deepseek.com
-  model: "doubao-seed-1-6-250615"                        # DeepSeek 改 deepseek-chat
+  model: "doubao-seed-2-1-pro-260915"                    # DeepSeek 改 deepseek-chat
   api_key_env: LLM_API_KEY
   batch_size: 8
   only_recommended: false      # true = 只推送模型推荐的论文（降噪更狠）
