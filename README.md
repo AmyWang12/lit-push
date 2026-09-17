@@ -124,6 +124,7 @@ lit-push/
 | Secret 名称 | 什么时候需要 |
 | --- | --- |
 | `FEISHU_WEBHOOK` / `FEISHU_SECRET` | 用飞书时 |
+| `CNKI_RSS_BASE` | 部署了知网国内中继云函数时（见“中文期刊”一节） |
 | `SMTP_USERNAME` / `SMTP_PASSWORD` | 用邮件时 |
 | `PUSHPLUS_TOKEN` | 用微信时 |
 | `TELEGRAM_BOT_TOKEN` | 用 Telegram 时 |
@@ -145,10 +146,16 @@ lit-push/
 改成 `true`，再加一个 Secret `LLM_API_KEY`：
 
 - **豆包方舟**（推荐国内用户）：登录 [火山方舟控制台](https://console.volcengine.com/ark)
-  → API Key 管理 → 创建 API Key；开通一个兼容模型（配置默认 `doubao-seed-1-6` 系列），
-  把模型/接入点 ID 填到 `model`，`base_url` 保持 `https://ark.cn-beijing.volces.com/api/v3`。
+  → 完成个人实名认证 → API Key 管理 → 创建 API Key；再到“开通管理”开通
+  `doubao-seed-2-1-pro`（配置默认模型 `doubao-seed-2-1-pro-260915`；
+  开通时可勾选“安心体验”，只消耗赠送的免费额度、超额自动暂停，不会产生扣费）。
+  `base_url` 保持 `https://ark.cn-beijing.volces.com/api/v3`。
+  本系统默认 `batch_size: 3`、`timeout: 300`、`disable_thinking: true`
+  （关闭推理模型的思维链，批量结构化输出从“必超时”变为每批约 30–45 秒，已实测稳定；
+  78 篇首跑约 15 分钟，日常新增几篇时 1–3 分钟）。
 - **DeepSeek**：注册 <https://platform.deepseek.com> 生成 key，
-  `base_url` 改 `https://api.deepseek.com`，`model` 填 `deepseek-chat`。
+  `base_url` 改 `https://api.deepseek.com`，`model` 填 `deepseek-chat`，
+  并把 `disable_thinking` 删掉或设为 `false`（DeepSeek 不认该参数）。
 
 每天通常只有几十篇候选、每篇只发摘要，费用一般在几分到几毛钱/天。
 不开通也完全能用，只是规则分类、英文原摘要、无评分。
@@ -193,10 +200,14 @@ python main.py --config config.yaml
 - 少数期刊暂未找到可用 RSS（如《新闻与传播研究》《对外传播》《当代传播》《新闻界》
   《西安外国语大学学报》《东方翻译》（已停更于 2021 年）），可按上面方法拿到代码后
   自行加一行；拿不到的用下一节的免费全文通道或 Google Scholar 快讯补充。
-- 知网 RSS 是公开服务，但 GitHub Actions 的海外节点偶发访问不到 `rss.cnki.net` 时，
-  该源会被自动跳过（日志可见），不影响其他源。需要绝对稳定可：
-  ① 在自己电脑上用“任务计划程序”每天定时跑 `python main.py`；
-  ② 自建 RSSHub（见文末）；③ 改用国内云函数。
+- **GitHub Actions 海外节点无法直连知网 RSS**（`rss.cnki.net` 对境外 CDN 地域封锁，
+  实测 25 个 feed 全部失败）。本系统支持“国内云函数中继”：把一个约 40 行的
+  免费云函数（代码在 `deploy/tencent-cnki-relay/index.py`，腾讯云 SCF 事件函数，
+  Python 3.10、免鉴权公网 URL、白名单只放行 `/knavi/rss/代码`）部署到国内节点，
+  再在 GitHub Secrets 配 `CNKI_RSS_BASE` = 云函数 URL（不带末尾斜杠），
+  程序会自动把知网请求改走中继，其余源不受影响。腾讯云云函数每月免费额度足够
+  每天数十次 RSS 拉取；不想部署时也可在自己电脑上用“任务计划程序”每天跑
+  `python main.py`（国内网络可直连，无需中继）。
 
 ## 中文全文怎么免费读（合法通道）
 
