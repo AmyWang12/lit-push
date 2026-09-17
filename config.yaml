@@ -642,7 +642,9 @@ llm:
   base_url: "https://ark.cn-beijing.volces.com/api/v3"   # 豆包方舟；DeepSeek 用 https://api.deepseek.com
   model: "doubao-seed-2-1-pro-260915"                    # DeepSeek 改 deepseek-chat
   api_key_env: LLM_API_KEY
-  batch_size: 8
+  batch_size: 3               # 每批送几篇给模型；推理模型建议 2-3，批太大易超时
+  timeout: 300                # 单批请求超时（秒）
+  disable_thinking: true      # 豆包推理模型关闭思维链，批量结构化输出更快更稳
   only_recommended: false      # true = 只推送模型推荐的论文（降噪更狠）
   min_score: 6
   max_abstract_chars: 1800

@@ -112,8 +112,13 @@ def save_seen(seen: Dict[str, str], papers: List[Dict[str, Any]], cfg: Dict[str,
 def _build_prompt(batch: List[Dict[str, Any]], category_names: List[str], other_name: str) -> str:
     lines = [
         "你是翻译学与传播学领域的资深文献综述专家。请对以下论文逐篇完成：",
-        "1) 归类：category 必须严格从下列类别中选一个：" + "；".join(category_names[:-1])
+        "1) 归类：category 必须严格从下列类别中选一个（照抄全名）：" + "；".join(category_names[:-1])
         + f"；都不符合才选“{other_name}”。",
+        "   判定要点：翻译史＝历史时期/档案/译员译事/口述史/区域翻译史；"
+        "翻译与传播＝对外传播/国际传播/话语体系/媒体/海外接受/民族文化外译；"
+        "翻译教育/翻译教学＝课程/学生/教学法/教材/翻译比赛/教师发展/口译教学；"
+        "人工智能与翻译＝机器翻译/大语言模型/CAT/译后编辑/口译技术/本地化；"
+        "其余翻译理论、翻译批评、应用翻译、民族语言翻译等才归入综合与其他。",
         "2) sub_topic：用 6-14 个字概括具体研究方向（如“区域翻译史”“医学口译教学”"
         "“大模型译后编辑”“对外传播话语”）。",
         "3) keywords：3-5 个中文学术关键词数组。",
@@ -165,7 +170,22 @@ def enrich_with_llm(papers: List[Dict[str, Any]], cfg: Dict[str, Any], log) -> L
     from litpush.classify import category_names
     names = category_names(cfg)
     other_name = names[-1]
+
+    def _norm_cat(s: str) -> str:
+        # 去掉“一、”等序号、空白与常见标点差异，便于容忍模型输出“翻译史”/“翻译教育”等
+        s = re.sub(r"^[一二三四五六七八九十0-9]+\s*[、.．:：]?\s*", "", s or "")
+        return re.sub(r"[\s/／、，,]+", "", s).strip()
+
+    cat_alias = {_norm_cat(n): n for n in names}
+    # 常见简称 -> 配置中的正式类别
+    for n in names:
+        core = _norm_cat(n)
+        for alias in (core.replace("翻译教学", ""), core.replace("翻译教育", ""),
+                      core.replace("人工智能", "AI")):
+            if alias and alias not in cat_alias:
+                cat_alias[alias] = n
     batch_size = int(llm.get("batch_size", 8))
+    timeout = int(llm.get("timeout", 300))
     max_chars = int(llm.get("max_abstract_chars", 1800))
     for p in papers:
         if p.get("abstract"):
@@ -182,8 +202,11 @@ def enrich_with_llm(papers: List[Dict[str, Any]], cfg: Dict[str, Any], log) -> L
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.3,
         }
+        # 豆包方舟推理模型默认开启思维链，批量结构化输出会显著拖慢；可在 config 关闭
+        if llm.get("disable_thinking", False):
+            body["thinking"] = {"type": "disabled"}
         try:
-            resp = requests.post(url, headers=headers, json=body, timeout=120)
+            resp = requests.post(url, headers=headers, json=body, timeout=timeout)
             resp.raise_for_status()
             content = resp.json()["choices"][0]["message"]["content"]
             parsed = _parse_response(content)
@@ -195,6 +218,17 @@ def enrich_with_llm(papers: List[Dict[str, Any]], cfg: Dict[str, Any], log) -> L
                 cat = (info.get("category") or "").strip()
                 if cat in names:
                     p["category"] = cat
+                else:
+                    # 容忍模型省略序号或换用近义写法
+                    norm = _norm_cat(cat)
+                    hit = cat_alias.get(norm)
+                    if not hit:
+                        for alias, full in cat_alias.items():
+                            if alias and (alias in norm or norm in alias):
+                                hit = full
+                                break
+                    if hit:
+                        p["category"] = hit
                 sub = (info.get("sub_topic") or "").strip()
                 if sub:
                     p["sub_topic"] = sub
