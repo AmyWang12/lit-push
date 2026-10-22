@@ -1,6 +1,6 @@
 # ============================================================
 # 专属文献推送系统 · 配置文件
-# 方向：语言智能 · 翻译与传播（翻译史 / 翻译与传播 / 翻译教育 / 人工智能与翻译）
+# 方向：语言智能 · 翻译与传播（翻译史 / 翻译与传播 / 翻译教育 / 人工智能与翻译 / 区域国别与区域传播）
 # 改完保存即可，无需改动代码。
 # ============================================================
 
@@ -9,11 +9,11 @@ empty_notify: true               # 当天没有新文献时也发一条“今日
 runtime:
   timezone: "Asia/Shanghai"
 
-# ---------- 四大研究板块（自动归类，顺序即报告/卡片顺序）----------
+# ---------- 五大研究板块（自动归类，顺序即报告/卡片顺序）----------
 # LLM 开启时由模型归类并给出具体研究方向；未开启时用下面的关键词规则打分兜底。
-# 归不进前四类的文章放入“其他相关”。
+# 归不进前五类的文章放入“其他相关”。
 classification:
-  fallback_other: "五、翻译学综合与其他"
+  fallback_other: "六、翻译学综合与其他"
   categories:
     # keywords = 强特征词（直接决定归类）；weak_keywords = 弱信号语境词，
     # 仅当四类强词全部未命中时启用，用于把翻译专刊文章尽量收进四大板块。
@@ -354,6 +354,118 @@ classification:
         - "智能体"
         - "算法"
         - "数字化转型"
+    # —— 第五类：以特定国家/地区/文明为研究单元的传播、媒体、话语、语言与形象研究 ——
+    # 与“二、翻译与传播”的边界：研究对象是翻译行为本身的跨语际传播归二；
+    # 以区域/国家为单元、不必须涉及翻译行为的传播/媒体/语言/形象研究归本类。
+    - name: "五、区域国别与区域传播"
+      keywords:
+        - "area studies"
+        - "regional studies"
+        - "country studies"
+        - "area-based"
+        - "regional communication"
+        - "regional media"
+        - "comparative media systems"
+        - "media systems"
+        - "global south"
+        - "belt and road"
+        - "sino-african"
+        - "china-africa"
+        - "african media"
+        - "southeast asian media"
+        - "middle east media"
+        - "latin american media"
+        - "central asian media"
+        - "sinophone"
+        - "diasporic media"
+        - "diaspora media"
+        - "overseas chinese media"
+        - "chinese-language media"
+        - "international chinese language education"
+        - "global chinese"
+        - "language spread"
+        - "language internationalization"
+        - "nation branding"
+        - "place branding"
+        - "media geopolitics"
+        - "geopolitics of communication"
+        - "peripheral communication"
+        - "borderland communication"
+        - "cross-border communication"
+        - "regional public diplomacy"
+        - "comparative communication research"
+        - "country image"
+        - "区域国别"
+        - "区域国别学"
+        - "区域研究"
+        - "国别研究"
+        - "区域传播"
+        - "国别传播"
+        - "周边传播"
+        - "边疆传播"
+        - "跨境传播"
+        - "全球南方"
+        - "一带一路"
+        - "丝路传播"
+        - "海外华文媒体"
+        - "华文媒体"
+        - "华语传播"
+        - "海外华语"
+        - "全球华语"
+        - "中文国际传播"
+        - "汉语国际传播"
+        - "国际中文教育"
+        - "区域形象"
+        - "国别形象"
+        - "国家品牌"
+        - "比较媒介体制"
+        - "媒介体制"
+        - "地缘传播"
+        - "传播地缘"
+        - "对非传播"
+        - "非洲传播"
+        - "东南亚传播"
+        - "东盟传播"
+        - "中东传播"
+        - "拉美传播"
+        - "中亚传播"
+        - "南亚传播"
+        - "中东欧传播"
+        - "太平洋岛国"
+        - "海外舆情"
+        - "区域舆情"
+        - "国别舆情"
+        - "华人华侨"
+        - "离散传播"
+        - "国别话语"
+        - "区域话语"
+        - "区域知识"
+        - "华文教育"
+        - "中文全球化"
+      weak_keywords:
+        - "region"
+        - "regional"
+        - "area"
+        - "country-specific"
+        - "comparative"
+        - "diaspora"
+        - "overseas"
+        - "border"
+        - "peripheral"
+        - "geopolitical"
+        - "geopolitics"
+        - "sino"
+        - "african"
+        - "asian"
+        - "latin"
+        - "区域"
+        - "国别"
+        - "海外"
+        - "邻国"
+        - "周边"
+        - "域外"
+        - "他国"
+        - "跨国"
 
 # ---------- 数据源 ----------
 sources:
@@ -441,6 +553,22 @@ sources:
       - "speech translation"
       - "translation memory"
       - "corpus translation studies"
+      # 区域国别与区域传播
+      - "area studies communication"
+      - "global south media"
+      - "global south communication"
+      - "Belt and Road communication"
+      - "China-Africa media"
+      - "diasporic media"
+      - "Sinophone media"
+      - "overseas Chinese media"
+      - "international Chinese language education"
+      - "comparative media systems"
+      - "borderland communication"
+      - "regional media"
+      - "regional journalism"
+      - "nation branding"
+      - "place branding public diplomacy"
     terms_zh:
       - "翻译史"
       - "对外传播"
@@ -454,6 +582,16 @@ sources:
       - "翻译批评"
       - "机器翻译"
       - "翻译技术"
+      - "区域国别"
+      - "区域传播"
+      - "国别传播"
+      - "周边传播"
+      - "全球南方"
+      - "华文媒体"
+      - "中文国际传播"
+      - "国际中文教育"
+      - "区域形象"
+      - "边疆传播"
     keywords_exclude:
       - "translational medicine"
       - "translational research"
@@ -527,6 +665,63 @@ sources:
         - "media translation"
         - "language policy"
         - "language ideology"
+      area: &kw_area      # 区域/全球传播综合刊：宽口径，保留翻译交叉
+        - "communication"
+        - "media"
+        - "journalism"
+        - "journalistic"
+        - "news"
+        - "discourse"
+        - "narrative"
+        - "public opinion"
+        - "public diplomacy"
+        - "soft power"
+        - "national image"
+        - "country image"
+        - "branding"
+        - "language"
+        - "linguistic"
+        - "translation"
+        - "translator"
+        - "interpreting"
+        - "intercultural"
+        - "cross-cultural"
+        - "transcultural"
+        - "transnational"
+        - "diaspora"
+        - "sinophone"
+        - "overseas chinese"
+        - "belt and road"
+        - "global south"
+        - "cinema"
+        - "film"
+        - "television"
+        - "social media"
+      area_strict: &kw_area_strict   # 区域政治/中国研究刊：严格只收传播-语言-文化交叉
+        - "communication"
+        - "media"
+        - "journalism"
+        - "news"
+        - "discourse"
+        - "narrative"
+        - "public opinion"
+        - "public diplomacy"
+        - "soft power"
+        - "national image"
+        - "branding"
+        - "language"
+        - "linguistic"
+        - "translation"
+        - "intercultural"
+        - "cross-cultural"
+        - "transcultural"
+        - "diaspora"
+        - "sinophone"
+        - "overseas chinese"
+        - "belt and road"
+        - "global south"
+        - "cinema"
+        - "television"
     journals:
       # —— 翻译学 / 口译学专刊：目录全收 ——
       - {name: "Target", issn: "1569-9986"}
@@ -585,6 +780,23 @@ sources:
       - {name: "Journal of Communication Inquiry", issn: "1552-4612", keywords_any: *kw_comm}
       - {name: "European Journal of Communication", issn: "1460-3705", keywords_any: *kw_comm}
       - {name: "Discourse, Context & Media", issn: "2211-6958", keywords_any: *kw_comm}
+      # —— 区域国别 / 全球传播 / 跨文化传播刊：区域媒体与国家品牌类目录全收 ——
+      - {name: "Journal of African Media Studies", issn: "1751-7974"}
+      - {name: "Journal of International and Intercultural Communication", issn: "1751-3057"}
+      - {name: "Journal of Intercultural Communication Research", issn: "1747-5759"}
+      - {name: "Place Branding and Public Diplomacy", issn: "1751-8040"}
+      - {name: "Media Asia", issn: "0129-6612"}
+      - {name: "Interactions: Studies in Communication & Culture", issn: "1757-2681"}
+      - {name: "International Journal of Media and Cultural Politics", issn: "1740-8296"}
+      # —— 综合传播大刊/文化政策刊：宽口径过滤 ——
+      - {name: "International Journal of Communication", issn: "1932-8036", keywords_any: *kw_area}
+      - {name: "International Journal of Cultural Policy", issn: "1028-6632", keywords_any: *kw_area}
+      # —— 区域政治/中国研究刊：严格只收传播·语言·文化交叉 ——
+      - {name: "Journal of Chinese Overseas", issn: "1793-0391", keywords_any: *kw_area_strict}
+      - {name: "The China Quarterly", issn: "0305-7410", keywords_any: *kw_area_strict}
+      - {name: "Journal of Contemporary China", issn: "1067-0564", keywords_any: *kw_area_strict}
+      - {name: "China Information", issn: "0920-203X", keywords_any: *kw_area_strict}
+      - {name: "Globalizations", issn: "1474-7731", keywords_any: *kw_area_strict}
 
   # RSS：知网官方期刊 RSS（免费、合法、无需购买/爬虫；仅含篇名、作者、日期、部分摘要）
   # 获取方法：navi.cnki.net 搜刊 → 期刊主页“RSS 订阅” → 把 navi.cnki.net 改成 rss.cnki.net
@@ -599,6 +811,17 @@ sources:
       cb: &kw_cb          # 传播类综合刊过滤词
         keywords_any: ["译", "翻译", "译介", "对外传播", "国际传播", "跨文化",
                        "国家形象", "公共外交", "全球传播", "对外话语", "外宣", "出海"]
+      qy: &kw_qy_wide     # 区域国别/传媒专刊：宽口径（含语言·文化·文明交流）
+        keywords_any: ["传播", "传媒", "媒体", "媒介", "舆论", "舆情", "话语", "新闻",
+                       "叙事", "形象", "话语权", "公共外交", "外交", "软实力", "译", "翻译",
+                       "跨文化", "华文", "华语", "中文", "汉语", "语言", "文明", "文化",
+                       "区域", "国别", "周边", "边疆", "海外", "一带一路", "全球南方",
+                       "出海", "国际中文", "他者"]
+      qy_strict: &kw_qy_strict  # 区域政治/国际关系刊：严格只收传播·语言·文化交叉
+        keywords_any: ["传播", "传媒", "媒体", "媒介", "舆论", "舆情", "话语", "新闻",
+                       "叙事", "形象", "话语权", "公共外交", "软实力", "译", "翻译",
+                       "跨文化", "华文", "华语", "汉语", "语言", "他者", "出海",
+                       "国际传播", "对外传播", "文明互鉴", "文化交流", "影视", "文学"]
     feeds:
       # —— 翻译学核心刊（全收）——
       - {name: "中国翻译", url: "https://rss.cnki.net/knavi/rss/ZGFY", lookback_days: 60}
@@ -630,6 +853,25 @@ sources:
       - {name: "青年记者", url: "https://rss.cnki.net/knavi/rss/QNJZ", lookback_days: 60, <<: *kw_cb}
       - {name: "新闻爱好者", url: "https://rss.cnki.net/knavi/rss/XWAH", lookback_days: 60, <<: *kw_cb}
       - {name: "传媒观察", url: "https://rss.cnki.net/knavi/rss/CMGC", lookback_days: 60, <<: *kw_cb}
+      # —— 区域国别学 / 全球传媒 / 公共外交（宽口径；集刊为年刊/半年刊，窗口 730 天防漏期）——
+      - {name: "区域国别学", url: "https://rss.cnki.net/knavi/rss/QYGB", lookback_days: 730, <<: *kw_qy_wide}
+      - {name: "国别和区域研究", url: "https://rss.cnki.net/knavi/rss/GBQY", lookback_days: 730, <<: *kw_qy_wide}
+      - {name: "全球传媒学刊", url: "https://rss.cnki.net/knavi/rss/QQCM", lookback_days: 90, <<: *kw_cb}
+      - {name: "公共外交季刊", url: "https://rss.cnki.net/knavi/rss/GGWJ", lookback_days: 730, <<: *kw_qy_wide}
+      # —— 区域国别/国际关系 CSSCI（严格只收传播·语言·文化交叉）——
+      - {name: "太平洋学报", url: "https://rss.cnki.net/knavi/rss/TPYX", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "西亚非洲", url: "https://rss.cnki.net/knavi/rss/XYFZ", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "东南亚研究", url: "https://rss.cnki.net/knavi/rss/DNYY", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "拉丁美洲研究", url: "https://rss.cnki.net/knavi/rss/LDMZ", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "当代亚太", url: "https://rss.cnki.net/knavi/rss/DDYT", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "国际展望", url: "https://rss.cnki.net/knavi/rss/GJZW", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "现代国际关系", url: "https://rss.cnki.net/knavi/rss/XDGJ", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "俄罗斯研究", url: "https://rss.cnki.net/knavi/rss/ELSY", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "美国研究", url: "https://rss.cnki.net/knavi/rss/MGYJ", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "德国研究", url: "https://rss.cnki.net/knavi/rss/DGYJ", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "法国研究", url: "https://rss.cnki.net/knavi/rss/FGYJ", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "日本研究", url: "https://rss.cnki.net/knavi/rss/RBYJ", lookback_days: 90, <<: *kw_qy_strict}
+      - {name: "南亚问题研究", url: "https://rss.cnki.net/knavi/rss/NYWT", lookback_days: 730, <<: *kw_qy_strict}
     # 想加其他 OA 英文刊（如 JoSTrans 无 DOI）：
     # - {name: "JoSTrans", url: "https://www.jostrans.org/feed.xml", lookback_days: 30}
 
