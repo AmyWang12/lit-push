@@ -20,7 +20,7 @@ from litpush.classify import group_papers
 FEISHU_CARD_LIMIT = 15
 FEISHU_CARD_MAX_CHARS = 26000
 HEADER_COLORS = {"一": "blue", "二": "turquoise", "三": "orange",
-                 "四": "green", "五": "grey"}
+                 "四": "green", "五": "violet", "六": "grey"}
 
 
 def _venue(p: Dict[str, Any]) -> str:
